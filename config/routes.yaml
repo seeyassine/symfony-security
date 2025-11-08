@@ -3,3 +3,12 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+
+# api_login:
+#     path: /api/login
+#     methods: POST
+
+# api_register:
+#     path: /api/register
+#     methods: POST
