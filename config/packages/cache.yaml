@@ -8,8 +8,32 @@ framework:
         # Other options include:
 
         # Redis
-        #app: cache.adapter.redis
-        #default_redis_provider: redis://localhost
+        app: cache.adapter.redis
+        default_redis_provider: '%env(REDIS_URL)%'
+        
+        # Configuration des pools de cache
+        pools:
+            # Pool principal pour l'application (réponses API)
+            app.cache.redis:
+                adapter: cache.adapter.redis
+                provider: '%env(REDIS_URL)%/0'
+                default_lifetime: 3600
+            
+            # Pool pour le cache des résultats Doctrine
+            doctrine.result_cache_pool:
+                adapter: cache.adapter.redis
+                provider: '%env(REDIS_URL)%/1'
+                default_lifetime: 3600
+            
+            # Pool pour le cache système Doctrine
+            doctrine.system_cache_pool:
+                adapter: cache.adapter.redis
+                provider: '%env(REDIS_URL)%/2'
+                default_lifetime: 3600
+            
+            monitoring.cache.pool:
+                adapter: cache.adapter.redis
+                provider: '%env(REDIS_URL)%/3'  # Nouvelle base Redis pour le monitoring
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
