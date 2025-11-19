@@ -49,12 +49,10 @@ final class LocationDummyController extends AbstractController
     #[Route('/remove/{id}')]
     public function remove(
         LocationRepository $locationRepository,
-        EntityManagerInterface $entityManager,
         int $id
     ): JsonResponse{
         $location = $locationRepository->find($id);
-        $entityManager->remove($location);
-        $entityManager->flush();
+        $locationRepository->remove($location, true);
 
         return new JsonResponse(null);
     }
