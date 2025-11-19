@@ -114,4 +114,48 @@ final class LocationDummyController extends AbstractController
 
         return new JsonResponse($json);
     }
+
+
+
+    #[Route('/show_countryC/{country}')]
+    public function show_countryC(
+        LocationRepository $locationRepository,
+        string $country,
+    ): JsonResponse
+    {
+
+        $locations = $locationRepository->findByCountryCode($country);
+
+        $json = [];
+
+        foreach($locations as $location){
+            $json[] = [
+                'id'=> $location->getId(),
+                'name'=> $location->getName()
+            ];
+        }
+
+        return new JsonResponse($json);
+    }
+
+
+    #[Route('/list')]
+    public function list(
+        LocationRepository $locationRepository,
+    ): JsonResponse
+    {
+
+        $locations = $locationRepository->findAll();
+
+        $json = [];
+
+        foreach($locations as $location){
+            $json[] = [
+                'id'=> $location->getId(),
+                'name'=> $location->getName()
+            ];
+        }
+
+        return new JsonResponse($json);
+    }
 }
