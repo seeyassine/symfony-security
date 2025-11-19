@@ -139,6 +139,24 @@ final class LocationDummyController extends AbstractController
     }
 
 
+    #[Route('/show_name/{name}')]
+    public function show_name(
+        LocationRepository $locationRepository,
+        string $name,
+    ): JsonResponse
+    {
+
+        $location = $locationRepository->findOneByName($name);
+
+        $json = [
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ];     
+
+        return new JsonResponse($json);
+    }
+
+
     #[Route('/list')]
     public function list(
         LocationRepository $locationRepository,
