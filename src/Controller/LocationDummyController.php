@@ -56,4 +56,19 @@ final class LocationDummyController extends AbstractController
 
         return new JsonResponse(null);
     }
+
+    #[Route('/show/{id}')]
+    public function show(
+        LocationRepository $locationRepository,
+        int $id,
+    ): JsonResponse
+    {
+
+        $location = $locationRepository->find($id);
+
+        return new JsonResponse([
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ]);
+    }
 }
