@@ -71,4 +71,21 @@ final class LocationDummyController extends AbstractController
             'name'=> $location->getName()
         ]);
     }
+
+    #[Route('/showby/{name}')]
+    public function showby(
+        LocationRepository $locationRepository,
+        string $name,
+    ): JsonResponse
+    {
+
+        $location = $locationRepository->findOneBy([
+            'name' => $name,
+        ]);
+
+        return new JsonResponse([
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ]);
+    }
 }
