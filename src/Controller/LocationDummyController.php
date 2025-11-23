@@ -148,6 +148,10 @@ final class LocationDummyController extends AbstractController
 
         $location = $locationRepository->findOneByName($name);
 
+        if(!$location){
+            throw $this->createNotFoundException();
+        }
+
         $json = [
             'id'=> $location->getId(),
             'name'=> $location->getName()
