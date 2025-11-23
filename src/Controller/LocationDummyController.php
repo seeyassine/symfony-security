@@ -205,7 +205,7 @@ final class LocationDummyController extends AbstractController
         ]);
     }
 
-    // fetch entity by name used MapEntity
+    // fetch entity by name used MapEntity Attribute
     #[Route('/show_name_AttributeT/{location_name}')]   //EntityValueResolver
     public function show_name_(
         #[MapEntity(mapping:['location_name' => 'name'])]
