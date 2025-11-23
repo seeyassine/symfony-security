@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\Json;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/location/dummy')]
 final class LocationDummyController extends AbstractController
@@ -179,5 +180,41 @@ final class LocationDummyController extends AbstractController
         }
 
         return new JsonResponse($json);
+    }
+
+    
+    #[Route('/show_by_id_Attribute/{id}')]
+    public function show_id_Att(
+        Location $location,
+    ): JsonResponse
+    {
+        return new JsonResponse([
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ]);
+    }
+
+    #[Route('/show_name_Attribute/{name}')]   //EntityValueResolver
+    public function show_name_At(
+        Location $location,
+    ): JsonResponse
+    {
+        return new JsonResponse([
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ]);
+    }
+
+    // fetch entity by name used MapEntity
+    #[Route('/show_name_AttributeT/{location_name}')]   //EntityValueResolver
+    public function show_name_(
+        #[MapEntity(mapping:['location_name' => 'name'])]
+        Location $location,
+    ): JsonResponse
+    {
+        return new JsonResponse([
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ]);
     }
 }
