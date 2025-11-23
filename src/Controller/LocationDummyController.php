@@ -217,4 +217,24 @@ final class LocationDummyController extends AbstractController
             'name'=> $location->getName()
         ]);
     }
+
+
+    #[Route('/show_name_AttributeF/{location_name}')]  
+    public function show_name_F(
+        #[MapEntity(mapping:['location_name' => 'name'])]
+        Location $location,
+    ): JsonResponse
+    {   
+        $json = [
+            'id'=> $location->getId(),
+            'name'=> $location->getName()
+        ];
+
+        foreach($location->getForecasts() as $forecast){
+            $json['forecasts'][$forecast->getDate()->format('Y-m-d')] = [
+                'celsius' => $forecast->getCelsius(), 
+            ];
+        }
+        return new JsonResponse($json);
+    }
 }
